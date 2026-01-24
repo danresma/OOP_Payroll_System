@@ -9,6 +9,7 @@ import Model.EmployeeData;
 import Model.EmployeeTablePanel;
 import Model.LoginManager;
 import Model.PayrollGenerator;
+import Model.PayrollService;
 import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -145,8 +146,18 @@ public class OOP_MotorPh_Payroll_System {
         if (!employeeID.isEmpty()) {
             String[] employeeData = EmployeeData.getEmployeeDataByID(employeeID);
             if (employeeData != null) {
-                String payrollSummary = PayrollGenerator.generatePayroll(employeeData, selectedMonth, selectedYear);
+                
+                PayrollService payrollService = new PayrollGenerator();
+                String payrollSummary = payrollService.generatePayroll(
+                        employeeData, selectedMonth, selectedYear
+                );
+                
+                
+                //old code
+                //String payrollSummary = PayrollGenerator.generatePayroll(employeeData, selectedMonth, selectedYear);
                 empDetails.setText(payrollSummary);
+                
+                
             } else {
                 JOptionPane.showMessageDialog(empFrame, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
             }

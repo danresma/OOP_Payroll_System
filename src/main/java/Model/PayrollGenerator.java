@@ -20,7 +20,7 @@ import service.CSVHandler;
  *
  * @author Administrator
  */
-public class PayrollGenerator {
+public class PayrollGenerator implements PayrollService {
     // SSS deduction 
     public static double sss(double sssContri) {
         if (sssContri < 3250) return 135.00;
@@ -168,8 +168,9 @@ public class PayrollGenerator {
 
         return weeklySummaries;
     }
-
-    public static String generatePayroll(String[] employeeData, String monthName, String selectedYear) {
+    
+    @Override   
+    public String generatePayroll(String[] employeeData, String monthName, String selectedYear) {
         try {
             Employee emp = new Employee();
             emp.empNum = employeeData[0];

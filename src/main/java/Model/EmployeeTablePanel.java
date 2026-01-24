@@ -338,7 +338,9 @@ public class EmployeeTablePanel extends JPanel {
             String selectedMonth = (String) monthDropdown.getSelectedItem();
             String selectedYear = (String) yearDropdown.getSelectedItem();
 
-            String payroll = PayrollGenerator.generatePayroll(employeeData, selectedMonth, selectedYear);
+            PayrollService payrollService = new PayrollGenerator();
+            String payroll = payrollService.generatePayroll(employeeData, selectedMonth, selectedYear);
+            
             resultArea.setText(payroll);
         });
 
