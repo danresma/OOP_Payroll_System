@@ -28,12 +28,15 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import service.CSVHandler;
+import service.DataService;
 
 /**
  *
  * @author Administrator
  */
 public class EmployeeTablePanel extends JPanel {
+    
+    private final DataService dataService = new CSVHandler ();
     
     private DefaultTableModel model;
     private JButton viewButton;
@@ -109,12 +112,12 @@ public class EmployeeTablePanel extends JPanel {
                 }
 
                 // Update CSV file
-                boolean success = CSVHandler.updateEmployeeByID("employee", employeeID, updatedData);
+                boolean success = dataService.updateData("employee", employeeID, updatedData);
                 if (success) {
                     JOptionPane.showMessageDialog(
                             SwingUtilities.getWindowAncestor(this),
                             "Employee updated successfully.",
-                            "Success", JOptionPane.INFORMATION_MESSAGE
+                            "Success", JOptionPane.INFORMATION_MESSAGE   
                     );
                 } else {
                     JOptionPane.showMessageDialog(
@@ -143,7 +146,7 @@ public class EmployeeTablePanel extends JPanel {
                     String employeeID = (String) model.getValueAt(selectedRow, 0);
 
                     //Deleted data from the CSV File
-                    CSVHandler.deleteEmployeeByID("employee", employeeID);
+                    dataService.deleteData("employee", employeeID);
 
                     //Delete Data on the Table
                     model.removeRow(selectedRow);
@@ -237,7 +240,7 @@ public class EmployeeTablePanel extends JPanel {
     // fetch all employee records from the csv file
     private void loadData() {
         model.setRowCount(0); // Clear existing rows
-        List<String[]> employeeData = CSVHandler.readCSV("employee");
+        List<String[]> employeeData = dataService.readData("employee");
         for (String[] data : employeeData) {
             if (data.length >= 10) {
                 String[] rowData = new String[7];

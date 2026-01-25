@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import service.CSVHandler;
+import service.DataService;
 
 /**
  *
@@ -33,6 +34,9 @@ public class AddNewEmployeePanel extends JPanel {
     };
     private JPanel cardPanel;
     private EmployeeTablePanel employeePanel;
+    
+    //Data Abstraction
+    private final DataService dataService = new CSVHandler();
 
     public AddNewEmployeePanel(JPanel cardPanel, EmployeeTablePanel employeePanel) {
         this.cardPanel = cardPanel;
@@ -102,7 +106,7 @@ public class AddNewEmployeePanel extends JPanel {
                 return;
             }
 
-            CSVHandler.appendCSV("employee", newEmployeeData);
+            dataService.appendData("employee", newEmployeeData);
 
             JOptionPane.showMessageDialog(
                     SwingUtilities.getWindowAncestor(this),
@@ -143,7 +147,7 @@ public class AddNewEmployeePanel extends JPanel {
 
     private String getNextEmployeeNumber() {
         try {
-            List<String[]> employees = CSVHandler.readCSV("employee");
+            List<String[]> employees = dataService.readData("employee");
 
             if (employees == null || employees.isEmpty()) {
                 return "10001";

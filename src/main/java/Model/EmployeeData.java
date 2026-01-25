@@ -6,14 +6,18 @@ package Model;
 
 import java.util.List;
 import service.CSVHandler;
+import service.DataService;
 
 /**
  *
  * @author Administrator
  */
 public class EmployeeData {
+    
+    private static final DataService dataService = new CSVHandler();
+    
     public static String getEmployeeDetailsByID(String employeeID) {
-            List<String[]> employeeRecords = CSVHandler.readCSV("employee");
+            List<String[]> employeeRecords = dataService.readData("employee");
 
             for (String[] data : employeeRecords) {
                 if (data[0].trim().equals(employeeID)) {
@@ -38,7 +42,7 @@ public class EmployeeData {
         }
 
         public static String[] getEmployeeDataByID(String employeeID) {
-        List<String[]> employeeRecords = CSVHandler.readCSV("employee");
+        List<String[]> employeeRecords = dataService.readData("employee");
 
         for (String[] data : employeeRecords) {
             if (data[0].trim().equals(employeeID)) {

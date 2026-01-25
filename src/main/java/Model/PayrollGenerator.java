@@ -15,12 +15,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import service.CSVHandler;
+import service.DataService;
 
 /**
  *
  * @author Administrator
  */
 public class PayrollGenerator implements PayrollService {
+    
+    private static final DataService dataService = new CSVHandler();
+    
     // SSS deduction 
     public static double sss(double sssContri) {
         if (sssContri < 3250) return 135.00;
@@ -63,7 +67,7 @@ public class PayrollGenerator implements PayrollService {
     }
 
     public static Employee findEmployeeByNumber(String empNum) {
-        List<String[]> employees = CSVHandler.readCSV("employee");
+        List<String[]> employees = dataService.readData("employee");
         for (String[] values : employees) {
             if (values[0].trim().equals(empNum.trim())) {
                 Employee emp = new Employee();
@@ -84,7 +88,7 @@ public class PayrollGenerator implements PayrollService {
     
     // check the record if my csv has the selected month and year
     public static boolean hasAttendanceRecords(String empNum, String month, String year) {
-    List<String[]> attendanceRecords = CSVHandler.readCSV("attendance");
+    List<String[]> attendanceRecords = dataService.readData("attendance");
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
     for (String[] values : attendanceRecords) {
@@ -104,7 +108,7 @@ public class PayrollGenerator implements PayrollService {
     public static List<Map<String, Object>> calculateWeeklyPayroll(
             String empNum, String month, String year, float hourlyRate) {
 
-        List<String[]> attendanceRecords = CSVHandler.readCSV("attendance");
+        List<String[]> attendanceRecords = dataService.readData("attendance");
         List<Map<String, Object>> weeklySummaries = new ArrayList<>();
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");

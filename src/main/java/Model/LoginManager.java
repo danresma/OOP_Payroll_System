@@ -15,12 +15,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import service.CSVHandler;
+import service.DataService;
 
 /**
  *
  * @author Administrator
  */
 public class LoginManager {
+    
+    private static final DataService dataService = new CSVHandler();
     
      public static void showLoginScreen() {
         JFrame frame = new JFrame("Login");
@@ -80,7 +83,7 @@ public class LoginManager {
     }
 
     private static boolean checkCredentials(String username, String password) {
-        List<String[]> credentialsList = CSVHandler.readCSV("useraccount");
+        List<String[]> credentialsList = dataService.readData("useraccount");
         for (String[] credentials : credentialsList) {
             if (credentials.length >= 2) {
                 String storedUsername = credentials[0].trim();

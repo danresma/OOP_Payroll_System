@@ -14,7 +14,7 @@ import com.opencsv.exceptions.CsvValidationException;
  *
  * @author Administrator
  */
-public class CSVHandler {
+public class CSVHandler implements DataService {
     
     
      
@@ -27,9 +27,13 @@ public class CSVHandler {
     }
 
     // Read CSV without header (for display purposes)
-    public static List<String[]> readCSV(String key) {
+    @Override
+    public List<String[]> readData(String key) {
         String filePath = filePaths.get(key);
         List<String[]> records = new ArrayList<>();
+        
+        
+        
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             String[] nextLine;
             boolean isHeader = true;
@@ -48,9 +52,11 @@ public class CSVHandler {
     }
 
     // Read CSV including header (for editing: delete/update)
-    public static List<String[]> readCSVWithHeader(String key) {
+    @Override
+    public List<String[]> readDatawithHeader(String key) {
         String filePath = filePaths.get(key);
         List<String[]> records = new ArrayList<>();
+        
         try (CSVReader reader = new CSVReader(new FileReader(filePath))) {
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
@@ -64,7 +70,10 @@ public class CSVHandler {
     }
 
     // Write CSV using OpenCSV (write all rows as is)
-    public static void writeCSV(String filePath, List<String[]> data) {
+    @Override
+    public void writeData(String key, List<String[]> data) {
+        String filePath = filePaths.get(key);
+        
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
             for (String[] row : data) {
                 writer.writeNext(row);
@@ -76,8 +85,10 @@ public class CSVHandler {
     }
 
     // Append a new row to CSV when adding a new employee data
-    public static void appendCSV(String key, String[] newData) {
+    @Override
+    public void appendData(String key, String[] newData) {
         String filePath = filePaths.get(key);
+        
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath, true))) {
             writer.writeNext(newData);
         } catch (IOException e) {
@@ -87,8 +98,9 @@ public class CSVHandler {
     }
 
     // Delete an employee row by employeeID
-    public static void deleteEmployeeByID(String fileName, String employeeID) {
-        List<String[]> allData = readCSVWithHeader(fileName);
+    @Override
+    public void deleteData(String fileName, String employeeID) {
+        List<String[]> allData = readDatawithHeader(fileName);
         if (allData.isEmpty()) {
             return; // empty file, nothing to delete
         }
@@ -103,12 +115,13 @@ public class CSVHandler {
         updatedData.addAll(dataRows);
 
         String filePath = filePaths.get(fileName);
-        writeCSV(filePath, updatedData);
+        writeData(filePath, updatedData);
     }
 
     // Update employee by ID, replace row with updatedData
-    public static boolean updateEmployeeByID(String fileName, String employeeID, String[] updatedData) {
-        List<String[]> allData = readCSVWithHeader(fileName);
+    @Override
+    public boolean updateData(String fileName, String employeeID, String[] updatedData) {
+        List<String[]> allData = readDatawithHeader(fileName);
         if (allData.isEmpty()) {
             return false; // empty file, cannot update
         }
@@ -132,7 +145,7 @@ public class CSVHandler {
             updatedDataList.addAll(dataRows);
 
             String filePath = filePaths.get(fileName);
-            writeCSV(filePath, updatedDataList);
+            writeData(filePath, updatedDataList);
         }
 
         return updated;
