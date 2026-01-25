@@ -13,6 +13,8 @@ import java.util.List;
  */
 public interface DataService {
     
+    //Abstraction
+    
     List <String[]> readData(String key);
     List <String []> readDatawithHeader(String key);
     
