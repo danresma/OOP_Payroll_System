@@ -66,6 +66,8 @@ public class PayrollGenerator implements PayrollService {
         private float hourlyRate;
     }
 
+    
+    
     public static Employee findEmployeeByNumber(String empNum) {
         List<String[]> employees = dataService.readData("employee");
         for (String[] values : employees) {
@@ -134,13 +136,19 @@ public class PayrollGenerator implements PayrollService {
             float hoursWorked = 8.0f;
             float overtime = 0.0f;
             float lateMinutes = 0.0f;
-
+            
+            //Late Computation
+            //
             if (logIn.isAfter(startTime)) {
-                hoursWorked -= Duration.between(startTime, logIn).toMinutes() / 60.0f;
+                 float lateHours = Duration.between(startTime, logIn).toMinutes() / 60.0f;
+                hoursWorked -= lateHours;
             }
 
             if (logIn.isAfter(gracePeriod)) {
                 lateMinutes = Duration.between(gracePeriod, logIn).toMinutes();
+                
+                //prevent negative  hours
+            hoursWorked = Math.max(0.0f, hoursWorked);
             }
 
             if (logOut.isAfter(endTime)) {
@@ -156,7 +164,13 @@ public class PayrollGenerator implements PayrollService {
             Map<String, Object> summary = weekData.get(weekNum);
             summary.put("workHours", (float) summary.get("workHours") + hoursWorked);
             summary.put("lateMinutes", (float) summary.get("lateMinutes") + lateMinutes);
-            float overtimePay = overtime * (hourlyRate * 1.25f);
+            
+            boolean eligibleForOvertime = !logIn.isAfter(gracePeriod);
+            
+            float overtimePay = eligibleForOvertime
+            ? overtime * (hourlyRate * 1.25f)
+            : 0.0f;
+            
             float salary = (hoursWorked * hourlyRate) + overtimePay;
             summary.put("salary", (float) summary.get("salary") + salary);
         }

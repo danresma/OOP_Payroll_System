@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import service.EmployeeService;
 
 /**
  *
@@ -144,7 +145,7 @@ public class OOP_MotorPh_Payroll_System {
         String selectedYear = (String) yearDropdown.getSelectedItem();
 
         if (!employeeID.isEmpty()) {
-            String[] employeeData = EmployeeData.getEmployeeDataByID(employeeID);
+            String[] employeeData = EmployeeService.getEmployeeDetailsById(employeeID);
             if (employeeData != null) {
                 
                 PayrollService payrollService = new PayrollGenerator();

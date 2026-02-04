@@ -21,7 +21,10 @@ import javax.swing.JTextField;
  * @author Administrator
  */
 public class EmployeeEditDialog extends JDialog {
-     private JTextField lastNameField;
+    
+    //encapsulations
+    
+    private JTextField lastNameField;
     private JTextField firstNameField;
     private JTextField sssNumberField;
     private JTextField philHealthNumberField;
@@ -106,7 +109,7 @@ public EmployeeEditDialog(Frame parent, String employeeID, String lastName, Stri
         return confirmed;
     }
     
-    
+    //Getters
     //Returns the updated employee data in an array.
     public String[] getUpdatedData(String employeeID) {
         return new String[]{

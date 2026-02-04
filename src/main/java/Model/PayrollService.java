@@ -9,7 +9,7 @@ package Model;
  * @author Administrator
  */
 public interface PayrollService {
-    String generatePayroll(String [] employeeData, String monthName, String selectedyear);
+    String generatePayroll(String [] employeeData, String monthName, String selectedYear);
     
     
     //for Abstraction
