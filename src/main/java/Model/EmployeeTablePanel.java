@@ -27,7 +27,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import service.CSVHandler;
+import dao.CSVHandler;
 import service.DataService;
 
 /**
