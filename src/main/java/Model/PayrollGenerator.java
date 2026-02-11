@@ -4,6 +4,7 @@
  */
 package Model;
 
+import service.PayrollService;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -54,17 +55,7 @@ public class PayrollGenerator implements PayrollService {
         else return 200833.33 + (compensation - 666667.00) * 0.35;
     }
 
-    static class Employee {
-        private String empNum;
-        private String firstName;
-        private String lastName;
-        private String birthDate;
-        private float basicPay;
-        private float riceSub;
-        private float phoneAl;
-        private float clothAl;
-        private float hourlyRate;
-    }
+    
 
     
     
@@ -72,16 +63,25 @@ public class PayrollGenerator implements PayrollService {
         List<String[]> employees = dataService.readData("employee");
         for (String[] values : employees) {
             if (values[0].trim().equals(empNum.trim())) {
-                Employee emp = new Employee();
-                emp.empNum = values[0];
-                emp.firstName = values[1];
-                emp.lastName = values[2];
-                emp.birthDate = values[3];
-                emp.basicPay = Float.parseFloat(values[13]);
-                emp.riceSub = Float.parseFloat(values[14]);
-                emp.phoneAl = Float.parseFloat(values[15]);
-                emp.clothAl = Float.parseFloat(values[16]);
-                emp.hourlyRate = Float.parseFloat(values[18]);
+                
+                Employee emp = new Employee(
+                values[0],                  // empNum
+                values[1],                  // firstName
+                values[2],                  // lastName
+                values[3],                  // birthDate
+                values[6],                  // sssNumber
+                values[7],                  // philhealthNumber
+                values[8],                  // TIN
+                values[9],                  // pagibigNumber
+                values[10],                 // status
+                values[11],                 // position
+                Float.parseFloat(values[12]), // basicPay
+                Float.parseFloat(values[13]), // riceSub
+                Float.parseFloat(values[14]), // phoneAl
+                Float.parseFloat(values[15]), // clothAl
+                Float.parseFloat(values[16])  // hourlyRate
+                );
+                
                 return emp;
             }
         }
@@ -188,40 +188,38 @@ public class PayrollGenerator implements PayrollService {
     }
     
     @Override   
-    public String generatePayroll(String[] employeeData, String monthName, String selectedYear) {
+    public String generatePayroll(Employee emp, String monthName, String selectedYear) {
         try {
-            Employee emp = new Employee();
-            emp.empNum = employeeData[0];
-            emp.firstName = employeeData[1];
-            emp.lastName = employeeData[2];
-            emp.birthDate = employeeData[3];
-            emp.basicPay = Float.parseFloat(employeeData[13]);
-            emp.riceSub = Float.parseFloat(employeeData[14]);
-            emp.phoneAl = Float.parseFloat(employeeData[15]);
-            emp.clothAl = Float.parseFloat(employeeData[16]);
-            emp.hourlyRate = Float.parseFloat(employeeData[18]);
-
-            Map<String, String> monthMap = Map.ofEntries(
-                Map.entry("January", "01"), Map.entry("February", "02"), Map.entry("March", "03"),
-                Map.entry("April", "04"), Map.entry("May", "05"), Map.entry("June", "06"),
-                Map.entry("July", "07"), Map.entry("August", "08"), Map.entry("September", "09"),
-                Map.entry("October", "10"), Map.entry("November", "11"), Map.entry("December", "12")
+           Map<String, String> monthMap = Map.ofEntries(
+            Map.entry("January", "01"),
+            Map.entry("February", "02"),
+            Map.entry("March", "03"),
+            Map.entry("April", "04"),
+            Map.entry("May", "05"),
+            Map.entry("June", "06"),
+            Map.entry("July", "07"),
+            Map.entry("August", "08"),
+            Map.entry("September", "09"),
+            Map.entry("October", "10"),
+            Map.entry("November", "11"),
+            Map.entry("December", "12")
             );
+           
             String monthNum = monthMap.getOrDefault(monthName, "01");
             
-            if (!hasAttendanceRecords(emp.empNum, monthNum, selectedYear)) {
+            if (!hasAttendanceRecords(emp.getEmpNum(), monthNum, selectedYear)) {
              return "No attendance records found for " + monthName + " " + selectedYear + ".";
             }
 
-            List<Map<String, Object>> weeklySummaries = calculateWeeklyPayroll(emp.empNum, monthNum, selectedYear, emp.hourlyRate);
+            List<Map<String, Object>> weeklySummaries = calculateWeeklyPayroll(emp.getEmpNum(), monthNum, selectedYear, emp.getHourlyRate());
 
             float grossSalary = 0, totalLate = 0;
 
             StringBuilder sb = new StringBuilder();
             sb.append("======= Payroll Summary =======\n");
-            sb.append("Employee No.: ").append(emp.empNum).append("\n");
-            sb.append("Name: ").append(emp.firstName).append(" ").append(emp.lastName).append("\n");
-            sb.append("Birthdate: ").append(emp.birthDate).append("\n");
+            sb.append("Employee No.: ").append(emp.getEmpNum()).append("\n");
+            sb.append("Name: ").append(emp.getFirstName()).append(" ").append(emp.getLastName()).append("\n");
+            sb.append("Birthdate: ").append(emp.getBirthDate()).append("\n");
             sb.append("Month: ").append(monthName).append("\n\n");
 
             sb.append("------- Weekly Breakdown -------\n");
@@ -232,7 +230,7 @@ public class PayrollGenerator implements PayrollService {
                 float weekSalary = (float) week.get("salary");
 
                 grossSalary += weekSalary;
-                totalLate += (late / 60.0f) * emp.hourlyRate;
+                totalLate += (late / 60.0f) * emp.getHourlyRate();
 
                 sb.append(String.format("Week %d:\n", weekNum));
                 sb.append(String.format(" - Hours Worked: %.2f\n", hours));
@@ -242,19 +240,19 @@ public class PayrollGenerator implements PayrollService {
             sb.append("\n");
 
             double sssDeduction = sss(grossSalary);
-            double philHealth = emp.basicPay * 0.03;
+            double philHealth = emp.getBasicPay() * 0.03;
             double pagIbig = 100;
             double taxTotal = tax(grossSalary);
-            double totalAllowance = emp.riceSub + emp.phoneAl + emp.clothAl;
+            double totalAllowance = emp.getRiceSub() + emp.getPhoneAl() + emp.getClothAl();
             double totalDeductions = sssDeduction + philHealth + pagIbig + taxTotal + totalLate;
             double netPay = grossSalary + totalAllowance - totalDeductions;
 
             sb.append(String.format("Gross Salary (Monthly): %.2f\n", grossSalary));
             sb.append(String.format("Late Deduction: %.2f\n\n", totalLate));
             sb.append("Allowances:\n");
-            sb.append(String.format("Rice Subsidy: %.2f\n", emp.riceSub));
-            sb.append(String.format("Phone Allowance: %.2f\n", emp.phoneAl));
-            sb.append(String.format("Clothing Allowance: %.2f\n", emp.clothAl));
+            sb.append(String.format("Rice Subsidy: %.2f\n", emp.getRiceSub()));
+            sb.append(String.format("Phone Allowance: %.2f\n", emp.getPhoneAl()));
+            sb.append(String.format("Clothing Allowance: %.2f\n", emp.getClothAl()));
             sb.append(String.format("Total Allowance: %.2f\n\n", totalAllowance));
             sb.append("Deductions:\n");
             sb.append(String.format("SSS: %.2f\n", sssDeduction));

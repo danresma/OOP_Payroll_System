@@ -5,11 +5,12 @@
 package com.mycompany.oop_motorph_payroll_system;
 
 import Model.AddNewEmployeePanel;
-import Model.EmployeeData;
+import Model.Employee;
+
 import Model.EmployeeTablePanel;
 import Model.LoginManager;
 import Model.PayrollGenerator;
-import Model.PayrollService;
+import service.PayrollService;
 import java.awt.CardLayout;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -22,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import service.DataService;
 import service.EmployeeService;
 
 /**
@@ -55,6 +57,8 @@ public class OOP_MotorPh_Payroll_System {
 
     //Main Frame Layout
     public static void showEmployeeDetailsFrame() {
+        
+        
     JFrame empFrame = new JFrame("MotorPH Payroll App");
     empFrame.setSize(800, 600);
     empFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -124,12 +128,18 @@ public class OOP_MotorPh_Payroll_System {
     JButton resetButton = new JButton("Reset");
     resetButton.setBounds(20, 490, 100, 25);
     homePanel.add(resetButton);
-
+    
+    //Service Initialize
+    DataService dataService = new CSVHandler();
+    EmployeeService employeeService = new EmployeeService (dataService);
+    PayrollService payrollService = new PayrollGenerator ();
+    
+    
     // Employee Table Panel
     EmployeeTablePanel employeePanel = new EmployeeTablePanel();
     AddNewEmployeePanel addEmployeePanel = new AddNewEmployeePanel(cardPanel, employeePanel);
-   
-
+  
+    
     // Add panels to cardPanel
     cardPanel.add(homePanel, "home");
     cardPanel.add(employeePanel, "employees");
@@ -140,32 +150,35 @@ public class OOP_MotorPh_Payroll_System {
 
     // Payroll Button Action
     payrollButton.addActionListener(e -> {
-        String employeeID = idField.getText().trim();
-        String selectedMonth = (String) monthDropdown.getSelectedItem();
-        String selectedYear = (String) yearDropdown.getSelectedItem();
 
-        if (!employeeID.isEmpty()) {
-            String[] employeeData = EmployeeService.getEmployeeDetailsById(employeeID);
-            if (employeeData != null) {
-                
-                PayrollService payrollService = new PayrollGenerator();
-                String payrollSummary = payrollService.generatePayroll(
-                        employeeData, selectedMonth, selectedYear
-                );
-                
-                
-                //old code
-                //String payrollSummary = PayrollGenerator.generatePayroll(employeeData, selectedMonth, selectedYear);
-                empDetails.setText(payrollSummary);
-                
-                
-            } else {
-                JOptionPane.showMessageDialog(empFrame, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            String employeeID = idField.getText().trim();
+            String selectedMonth = (String) monthDropdown.getSelectedItem();
+            String selectedYear = (String) yearDropdown.getSelectedItem();
+
+            if (employeeID.isEmpty()) {
+                JOptionPane.showMessageDialog(empFrame,
+                        "Please enter a valid ID.",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
             }
-        } else {
-            JOptionPane.showMessageDialog(empFrame, "Please enter a valid ID.", "Warning", JOptionPane.WARNING_MESSAGE);
-        }
-    });
+
+            // Get Employee OBJECT 
+            Employee employee = employeeService.getEmployeeById(employeeID);
+
+            if (employee == null) {
+                JOptionPane.showMessageDialog(empFrame,
+                        "Employee not found.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            //  Pass Employee Object to PayrollGenerator
+            String payrollSummary = payrollService.generatePayroll(employee,selectedMonth, selectedYear);
+
+            empDetails.setText(payrollSummary);
+        });
 
     // Reset Button Action
     resetButton.addActionListener(e -> {
