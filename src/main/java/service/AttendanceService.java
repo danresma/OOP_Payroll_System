@@ -28,7 +28,7 @@ public class AttendanceService {
     
     public boolean hasAttendance(String EmpNum, int month, int year){
         List <String[]> records = dataService.readData("attendance");
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/DD/yyyy");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         for (String [] record : records){
             if(!record[0].equals (EmpNum))continue;
             LocalDate date = LocalDate.parse(record[3], dateFormatter);

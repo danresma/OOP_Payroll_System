@@ -36,44 +36,64 @@ public class PayrollGenerator implements PayrollService {
     
     @Override
     public String generatePayroll(Employee emp, String monthName, String selectedYear) {
-        try {
-            int month = OOP_MotorPh_Payroll_System.monthNameToNumber(monthName);
-            
-            if (emp == null) return "Employee not found.";
+         try {
+        int month = OOP_MotorPh_Payroll_System.monthNameToNumber(monthName);
 
-            if (!attendanceService.hasAttendance(emp.getEmpNum(), month, Integer.parseInt(selectedYear)))
-                return "No attendance records found for " + monthName + " " + selectedYear + ".";
+        if (emp == null) return "Employee not found.";
 
-            List<Map<String, Object>> weeklySummaries = attendanceService.calculateWeeklyHours(
-                    emp.getEmpNum(), month, Integer.parseInt(selectedYear), emp.getHourlyRate()
-            );
-
-            float grossSalary = 0, totalLate = 0;
-            StringBuilder sb = new StringBuilder();
-            sb.append("Payroll Summary for ").append(emp.getFirstName()).append(" ").append(emp.getLastName()).append("\n");
-
-            for (Map<String, Object> week : weeklySummaries) {
-                grossSalary += (float) week.get("salary");
-                totalLate += ((float) week.get("lateMinutes") / 60f) * emp.getHourlyRate();
-            }
-
-            double sssDeduction = deductionService.calculateSSS(grossSalary);
-            double philHealth = deductionService.calculatePhilHealth(emp.getBasicPay());
-            double pagIbig = deductionService.calculatePagIbig();
-            double tax = deductionService.calculateTax(grossSalary);
-            double totalAllowance = emp.getRiceSub() + emp.getPhoneAl() + emp.getClothAl();
-            double totalDeductions = sssDeduction + philHealth + pagIbig + tax + totalLate;
-            double netPay = grossSalary + totalAllowance - totalDeductions;
-
-            sb.append(String.format("Gross Salary: %.2f\n", grossSalary));
-            sb.append(String.format("Total Deductions: %.2f\n", totalDeductions));
-            sb.append(String.format("Net Pay: %.2f\n", netPay));
-
-            return sb.toString();
-
-        } catch (Exception e) {
-            return "Error generating payroll: " + e.getMessage();
+        // Check attendance
+        if (!attendanceService.hasAttendance(emp.getEmpNum(), month, Integer.parseInt(selectedYear))) {
+            return "No attendance records found for " + monthName + " " + selectedYear + ".";
         }
+
+        // Get weekly summaries
+        List<Map<String, Object>> weeklySummaries = attendanceService.calculateWeeklyHours(
+            emp.getEmpNum(), month, Integer.parseInt(selectedYear), emp.getHourlyRate()
+        );
+
+        float grossSalary = 0, totalLate = 0;
+        StringBuilder sb = new StringBuilder();
+
+        // ------------------ Weekly Breakdown ------------------
+        sb.append("Payroll Summary for ").append(emp.getFirstName()).append(" ").append(emp.getLastName()).append("\n");
+        sb.append("Month: ").append(monthName).append(" ").append(selectedYear).append("\n\n");
+        sb.append("------- Weekly Breakdown -------\n");
+
+        for (Map<String, Object> week : weeklySummaries) {
+            int weekNum = (int) week.get("week");
+            float hoursWorked = (float) week.get("workHours");
+            float lateMinutes = (float) week.get("lateMinutes");
+            float weekSalary = (float) week.get("salary");
+
+            grossSalary += weekSalary;
+            totalLate += (lateMinutes / 60f) * emp.getHourlyRate();
+
+            sb.append(String.format("Week %d:\n", weekNum));
+            sb.append(String.format(" - Hours Worked: %.2f\n", hoursWorked));
+            sb.append(String.format(" - Late Minutes: %.2f\n", lateMinutes));
+            sb.append(String.format(" - Weekly Salary: %.2f\n", weekSalary));
+        }
+        sb.append("\n");
+        // ---
+            
+ // Deductions & Allowances
+        double sssDeduction = deductionService.calculateSSS(grossSalary);
+        double philHealth = deductionService.calculatePhilHealth(emp.getBasicPay());
+        double pagIbig = deductionService.calculatePagIbig();
+        double tax = deductionService.calculateTax(grossSalary);
+        double totalAllowance = emp.getRiceSub() + emp.getPhoneAl() + emp.getClothAl();
+        double totalDeductions = sssDeduction + philHealth + pagIbig + tax + totalLate;
+        double netPay = grossSalary + totalAllowance - totalDeductions;
+
+        // Totals
+        sb.append(String.format("Gross Salary: %.2f\n", grossSalary));
+        sb.append(String.format("Total Deductions: %.2f\n", totalDeductions));
+        sb.append(String.format("Net Pay: %.2f\n", netPay));
+
+        return sb.toString();
+
+    } catch (Exception e) {
+        return "Error generating payroll: " + e.getMessage();
     }
-}
+    }}
 
