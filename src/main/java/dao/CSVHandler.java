@@ -104,56 +104,47 @@ public class CSVHandler implements DataService {
 
     // Delete an employee row by employeeID
     @Override
-    public void deleteData(String fileName, String employeeID) {
-        List<String[]> allData = readDatawithHeader(fileName);
-        if (allData.isEmpty()) {
-            return; // empty file, nothing to delete
-        }
+    public void deleteData(String key, String employeeID) {
+    List<String[]> allData = readDatawithHeader(key);
+    if (allData.isEmpty()) return;
 
-        String[] header = allData.get(0);
-        List<String[]> dataRows = new ArrayList<>(allData.subList(1, allData.size()));
+    String[] header = allData.get(0);
+    List<String[]> dataRows = new ArrayList<>(allData.subList(1, allData.size()));
 
-        dataRows.removeIf(row -> row.length > 0 && row[0].equals(employeeID));
-        // Adds back the header then the remaining data, rows
-        List<String[]> updatedData = new ArrayList<>();
-        updatedData.add(header);
-        updatedData.addAll(dataRows);
+    dataRows.removeIf(row -> row.length > 0 && row[0].equals(employeeID));
 
-        String filePath = filePaths.get(fileName);
-        writeData(filePath, updatedData);
+    List<String[]> updatedData = new ArrayList<>();
+    updatedData.add(header);
+    updatedData.addAll(dataRows);
+
+    writeData(key, updatedData); 
     }
 
     // Update employee by ID, replace row with updatedData
     @Override
-    public boolean updateData(String fileName, String employeeID, String[] updatedData) {
-        List<String[]> allData = readDatawithHeader(fileName);
-        if (allData.isEmpty()) {
-            return false; // empty file, cannot update
+    public boolean updateData(String key, String employeeID, String[] updatedData) {
+    List<String[]> allData = readDatawithHeader(key);
+    if (allData.isEmpty()) return false;
+
+    String[] header = allData.get(0);
+    List<String[]> dataRows = new ArrayList<>(allData.subList(1, allData.size()));
+    boolean updated = false;
+
+    for (int i = 0; i < dataRows.size(); i++) {
+        if (dataRows.get(i).length > 0 && dataRows.get(i)[0].equals(employeeID)) {
+            dataRows.set(i, updatedData);
+            updated = true;
+            break;
         }
-
-        String[] header = allData.get(0);
-        List<String[]> dataRows = new ArrayList<>(allData.subList(1, allData.size()));
-        boolean updated = false;
-
-        for (int i = 0; i < dataRows.size(); i++) {
-            String[] row = dataRows.get(i);
-            if (row.length > 0 && row[0].equals(employeeID)) {
-                dataRows.set(i, updatedData);
-                updated = true;
-                break;
-            }
-        }
-
-        if (updated) {
-            List<String[]> updatedDataList = new ArrayList<>();
-            updatedDataList.add(header);
-            updatedDataList.addAll(dataRows);
-
-            String filePath = filePaths.get(fileName);
-            writeData(filePath, updatedDataList);
-        }
-
-        return updated;
     }
-    
+
+    if (updated) {
+        List<String[]> updatedDataList = new ArrayList<>();
+        updatedDataList.add(header);
+        updatedDataList.addAll(dataRows);
+        writeData(key, updatedDataList); // Pass key, not filePath
+    }
+
+    return updated;
+}
 }

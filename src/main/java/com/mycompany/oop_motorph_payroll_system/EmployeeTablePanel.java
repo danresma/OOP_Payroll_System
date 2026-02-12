@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package com.mycompany.oop_motorph_payroll_system;
 
+import Model.Employee;
+import Model.EmployeeEditDialog;
+import Model.PayrollGenerator;
 import service.PayrollService;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -30,6 +33,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import dao.CSVHandler;
 import service.DataService;
+import service.EmployeeService;
 
 /**
  *
@@ -38,6 +42,7 @@ import service.DataService;
 public class EmployeeTablePanel extends JPanel {
     
     private final DataService dataService = new CSVHandler ();
+    private final EmployeeService employeeService = new EmployeeService(new CSVHandler());
     
     private DefaultTableModel model;
     private JButton viewButton;
@@ -263,9 +268,10 @@ public class EmployeeTablePanel extends JPanel {
     }
 
     private void showPayrollGenerationDialog(String employeeID) {
-        // Get employee details
-        String[] employeeData = EmployeeData.getEmployeeDataByID(employeeID);
-        if (employeeData == null) {
+        
+        Employee employee = employeeService.getEmployeeById(employeeID);
+        
+        if (employee == null) {
             JOptionPane.showMessageDialog(
                     SwingUtilities.getWindowAncestor(this),
                     "Employee details not found for ID: " + employeeID
@@ -285,7 +291,7 @@ public class EmployeeTablePanel extends JPanel {
         // Employee details panel
         JPanel detailsPanel = new JPanel(new BorderLayout());
         detailsPanel.setBorder(BorderFactory.createTitledBorder("Employee Information"));
-        JTextArea detailsArea = new JTextArea(EmployeeData.getEmployeeDetailsByID(employeeID));
+        JTextArea detailsArea = new JTextArea(employeeService.getEmployeeDetailsById(employeeID));
         detailsArea.setEditable(false);
         detailsArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         detailsPanel.add(new JScrollPane(detailsArea), BorderLayout.CENTER);
@@ -342,8 +348,8 @@ public class EmployeeTablePanel extends JPanel {
             String selectedMonth = (String) monthDropdown.getSelectedItem();
             String selectedYear = (String) yearDropdown.getSelectedItem();
 
-            PayrollService payrollService = new PayrollGenerator();
-            String payroll = payrollService.generatePayroll(employeeData, selectedMonth, selectedYear);
+            PayrollService payrollService = new PayrollGenerator(dataService);
+            String payroll = payrollService.generatePayroll(employee, selectedMonth, selectedYear);
             
             resultArea.setText(payroll);
         });

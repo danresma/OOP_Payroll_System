@@ -7,9 +7,9 @@ package com.mycompany.oop_motorph_payroll_system;
 import Model.AddNewEmployeePanel;
 import Model.Employee;
 
-import Model.EmployeeTablePanel;
 import Model.LoginManager;
 import Model.PayrollGenerator;
+import dao.CSVHandler;
 import service.PayrollService;
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -37,7 +37,7 @@ public class OOP_MotorPh_Payroll_System {
     }
     
     // Convert Month into number 
-    private static int monthNameToNumber(String monthName) {
+    public static int monthNameToNumber(String monthName) {
         switch (monthName) {
             case "January": return 1;
             case "February": return 2;
@@ -132,7 +132,7 @@ public class OOP_MotorPh_Payroll_System {
     //Service Initialize
     DataService dataService = new CSVHandler();
     EmployeeService employeeService = new EmployeeService (dataService);
-    PayrollService payrollService = new PayrollGenerator ();
+    PayrollService payrollService = new PayrollGenerator(dataService);    
     
     
     // Employee Table Panel

@@ -178,14 +178,21 @@ public class Employee {
         
      public static Employee fromCSV (String[]data){
      return new Employee(
-            data[0], data[2], data[1], data[3],   // Employee ID, First Name, Last Name, Birthday
-            data[6], data[7], data[8], data[9],   // SSS, PhilHealth, TIN, Pag-IBIG
-            data[10], data[11],                     // Status, Position
-            Float.parseFloat (data[11]),            // basicPay
-            Float.parseFloat(data[14]),             // Rice Subsidy
-            Float.parseFloat(data[15]),             // Phone Allowance
-            Float.parseFloat(data[16]),             // Clothing Allowance
-            Float.parseFloat(data[18])             // Hourly Rate
+            data[0],  // Employee #
+            data[2],  // First Name
+            data[1],  // Last Name
+            data[3],  // Birthday
+            data[6],  // SSS #
+            data[7],  // Philhealth #
+            data[8],  // TIN #
+            data[9],  // Pag-ibig #
+            data[10], // Status
+            data[11], // Position
+            Float.parseFloat(data[13]), // Basic Salary 
+            Float.parseFloat(data[14]), // Rice Subsidy
+            Float.parseFloat(data[15]), // Phone Allowance
+            Float.parseFloat(data[16]), // Clothing Allowance
+            Float.parseFloat(data[18])  // Hourly Rate
              );
      
      }
