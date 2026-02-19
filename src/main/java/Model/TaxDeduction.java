@@ -12,12 +12,12 @@ public class TaxDeduction extends DeductionService {
 
     @Override
     public double Calculate(Employee employee, double grossSalary) {
-        if (compensation <= 20832) return 0;
-        else if (compensation < 33333) return (compensation - 20833) * 0.2;
-        else if (compensation < 66667) return 2500 + (compensation - 33333) * 0.25;
-        else if (compensation < 166667) return 10833 + (compensation - 66667) * 0.3;
-        else if (compensation < 666667) return 40833.33 + (compensation - 166667) * 0.32;
-        else return 200833.33 + (compensation - 666667) * 0.35;
+        if (grossSalary <= 20832) return 0;
+        else if (grossSalary < 33333) return (grossSalary - 20833) * 0.2;
+        else if (grossSalary < 66667) return 2500 + (grossSalary - 33333) * 0.25;
+        else if (grossSalary < 166667) return 10833 + (grossSalary - 66667) * 0.3;
+        else if (grossSalary < 666667) return 40833.33 + (grossSalary - 166667) * 0.32;
+        else return 200833.33 + (grossSalary - 666667) * 0.35;
     }
     
 }

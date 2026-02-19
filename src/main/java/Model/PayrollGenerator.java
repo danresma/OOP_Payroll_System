@@ -7,7 +7,7 @@ package Model;
 import com.mycompany.oop_motorph_payroll_system.OOP_MotorPh_Payroll_System;
 import service.PayrollService;
 
-import dao.CSVHandler;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -84,18 +84,41 @@ public class PayrollGenerator implements PayrollService {
         sb.append("\n");
         // ---
             
- // Deductions & Allowances
-        double sssDeduction = deductionService.calculateSSS(grossSalary);
-        double philHealth = deductionService.calculatePhilHealth(emp.getBasicPay());
-        double pagIbig = deductionService.calculatePagIbig();
-        double tax = deductionService.calculateTax(grossSalary);
-        double totalAllowance = emp.getRiceSub() + emp.getPhoneAl() + emp.getClothAl();
-        double totalDeductions = sssDeduction + philHealth + pagIbig + tax + totalLate;
-        double netPay = grossSalary + totalAllowance - totalDeductions;
+        // Deductions & Allowances
+        // OLD CODE
+        // double sssDeduction = deductionService.calculateSSS(grossSalary);
+        // double philHealth = deductionService.calculatePhilHealth(emp.getBasicPay());
+        // double pagIbig = deductionService.calculatePagIbig();
+        // double tax = deductionService.calculateTax(grossSalary);
+        // double totalAllowance = emp.getRiceSub() + emp.getPhoneAl() + emp.getClothAl();
+        // double totalDeductions = sssDeduction + philHealth + pagIbig + tax + totalLate;
+        // double netPay = grossSalary + totalAllowance - totalDeductions;
+        
+        //New Code Upadte
+        // Using Polymorphic 
+        
+        double totalDeductions =  0;
+        for (DeductionService deduction : deductions){
+            totalDeductions += deduction.Calculate(emp, grossSalary);
+        }
+        
+        //Late
+        totalDeductions += totalLate;
+        
+        //Allowances
+        double totalAllowances = 
+                emp.getRiceSub()+
+                emp.getPhoneAl()+
+                emp.getClothAl();
+        
+        
 
         // Totals
         sb.append(String.format("Gross Salary: %.2f\n", grossSalary));
         sb.append(String.format("Total Deductions: %.2f\n", totalDeductions));
+        
+        double netPay = grossSalary + totalAllowances - totalDeductions;
+        
         sb.append(String.format("Net Pay: %.2f\n", netPay));
 
         return sb.toString();
