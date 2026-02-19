@@ -23,6 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import service.AttendanceService;
 import service.DataService;
 import service.EmployeeService;
 
@@ -33,7 +34,9 @@ import service.EmployeeService;
 public class OOP_MotorPh_Payroll_System {
 
      public static void main(String[] args) {
-           SwingUtilities.invokeLater(LoginManager::showLoginScreen);     
+         
+        DataService dataService = new CSVHandler();
+           SwingUtilities.invokeLater(() -> LoginManager.showLoginScreen(dataService));     
     }
     
     // Convert Month into number 
@@ -132,12 +135,13 @@ public class OOP_MotorPh_Payroll_System {
     //Service Initialize
     DataService dataService = new CSVHandler();
     EmployeeService employeeService = new EmployeeService (dataService);
-    PayrollService payrollService = new PayrollGenerator(dataService);    
+    PayrollService payrollService = new PayrollGenerator(dataService); 
+    AttendanceService attendanceService = new AttendanceService (dataService);
     
     
     // Employee Table Panel
-    EmployeeTablePanel employeePanel = new EmployeeTablePanel();
-    AddNewEmployeePanel addEmployeePanel = new AddNewEmployeePanel(cardPanel, employeePanel);
+    EmployeeTablePanel employeePanel = new EmployeeTablePanel(dataService, employeeService);
+    AddNewEmployeePanel addEmployeePanel = new AddNewEmployeePanel(cardPanel, employeePanel, null);
   
     
     // Add panels to cardPanel

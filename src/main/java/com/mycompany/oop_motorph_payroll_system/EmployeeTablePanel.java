@@ -41,15 +41,19 @@ import service.EmployeeService;
  */
 public class EmployeeTablePanel extends JPanel {
     
-    private final DataService dataService = new CSVHandler ();
-    private final EmployeeService employeeService = new EmployeeService(new CSVHandler());
+    private final DataService dataService;
+    private final EmployeeService employeeService;
     
     private DefaultTableModel model;
     private JButton viewButton;
     private JButton deleteButton;
     private JButton updateButton;
 
-    public EmployeeTablePanel() {
+    public EmployeeTablePanel(DataService dataService, EmployeeService employeeService) {
+        
+            this.dataService = dataService;
+            this.employeeService = employeeService;
+            
         setLayout(new BorderLayout());
         String[] columnNames = {
                 "Employee Number", "Last Name", "First Name",

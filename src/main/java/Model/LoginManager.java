@@ -23,9 +23,15 @@ import service.DataService;
  */
 public class LoginManager {
     
-    private static final DataService dataService = new CSVHandler();
+    private static DataService dataService;
     
-     public static void showLoginScreen() {
+    
+    
+    
+     public static void showLoginScreen(DataService dS) {
+        
+        dataService = dS;
+        
         JFrame frame = new JFrame("Login");
         JLabel userLabel = new JLabel("Username");
         JLabel passLabel = new JLabel("Password");

@@ -36,12 +36,13 @@ public class AddNewEmployeePanel extends JPanel {
     private JPanel cardPanel;
     private EmployeeTablePanel employeePanel;
     
-    //Data Abstraction
-    private final DataService dataService = new CSVHandler();
+    //Data 
+    private final DataService dataService;
 
-    public AddNewEmployeePanel(JPanel cardPanel, EmployeeTablePanel employeePanel) {
+    public AddNewEmployeePanel(JPanel cardPanel, EmployeeTablePanel employeePanel, DataService dataService) {
         this.cardPanel = cardPanel;
         this.employeePanel = employeePanel;
+        this.dataService = dataService;
 
         setLayout(new BorderLayout());
 

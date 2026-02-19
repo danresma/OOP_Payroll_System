@@ -8,11 +8,11 @@ import com.mycompany.oop_motorph_payroll_system.OOP_MotorPh_Payroll_System;
 import service.PayrollService;
 
 import dao.CSVHandler;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import service.AttendanceService;
 import service.DataService;
-import service.DeductionService;
 import service.EmployeeService;
 
 /**
@@ -23,13 +23,21 @@ public class PayrollGenerator implements PayrollService {
     
     private final EmployeeService employeeService;
     private final AttendanceService attendanceService;
-    private final DeductionService deductionService;
+    private final List<DeductionService> deductions;
     
-    // Constractor
+    // Constractors
     public PayrollGenerator(DataService dataService) {
         this.employeeService = new EmployeeService(dataService);
         this.attendanceService = new AttendanceService(dataService);
-        this.deductionService = new DeductionService();
+        
+        deductions = new ArrayList<> ();
+        deductions.add(new SSSDeduction());
+        deductions.add(new PhilhealthDeduction());
+        deductions.add(new PagibigDeduction());
+        deductions.add(new TaxDeduction());
+        
+        
+        
     }
     
     //Implements interface

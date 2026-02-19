@@ -26,6 +26,9 @@ public class AttendanceService {
         this.dataService = dataService;
     }
     
+    
+    
+    
     public boolean hasAttendance(String EmpNum, int month, int year){
         List <String[]> records = dataService.readData("attendance");
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
