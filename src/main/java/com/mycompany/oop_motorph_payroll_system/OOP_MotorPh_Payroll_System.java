@@ -36,9 +36,15 @@ public class OOP_MotorPh_Payroll_System {
      public static void main(String[] args) {
          
         DataService dataService = new CSVHandler();
+        
+        //Log In
            SwingUtilities.invokeLater(() -> LoginManager.showLoginScreen(dataService));     
     }
-    
+     
+     
+     
+     
+    //Main Dashboard
     // Convert Month into number 
     public static int monthNameToNumber(String monthName) {
         switch (monthName) {

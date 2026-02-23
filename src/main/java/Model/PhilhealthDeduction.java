@@ -12,7 +12,7 @@ public class PhilhealthDeduction extends DeductionService {
 
     @Override
     public double Calculate(Employee employee, double grossSalary) {
-         return employee.getBasicPay()* 0.03;
+         return employee.getBasicPay()* 0.03 /2;
         
     }
     

@@ -39,6 +39,9 @@ import service.EmployeeService;
  *
  * @author Administrator
  */
+// Currently this class is not in use
+// This class is transferred into the new GUI 
+
 public class EmployeeTablePanel extends JPanel {
     
     private final DataService dataService;
@@ -247,7 +250,7 @@ public class EmployeeTablePanel extends JPanel {
         updateButton.setEnabled(hasSelection && hasData);
     }
 
-    // fetch all employee records from the csv file
+    // get all employee records data
     private void loadData() {
         model.setRowCount(0); // Clear existing rows
         List<String[]> employeeData = dataService.readData("employee");

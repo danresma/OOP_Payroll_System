@@ -4,6 +4,7 @@
  */
 package Model;
 
+import com.mycompany.oop_motorph_payroll_system.Dashboard_Panel_A;
 import com.mycompany.oop_motorph_payroll_system.OOP_MotorPh_Payroll_System;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -74,6 +75,8 @@ public class LoginManager {
                     JOptionPane.showMessageDialog(frame, "Login Successful");
                     frame.dispose(); // Close login window
                     OOP_MotorPh_Payroll_System.showEmployeeDetailsFrame(); // Show main app
+                    //Dashboard_Panel_A dashboard = new Dashboard_Panel_A();  // show Dashboard A
+                    //dashboard.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Invalid Credentials");
                 }
