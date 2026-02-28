@@ -28,10 +28,12 @@ public class Employee {
         private float phoneAl;
         private float clothAl;
         private float hourlyRate;
+        private String role;
 
         //constractor
 
-    public Employee(String empNum, String firstName, String lastName, String birthDate, String sssNumber, String philhealthNumber, String Tin, String pagibigNumber, String status, String position, float basicPay, float riceSub, float phoneAl, float clothAl, float hourlyRate) {
+    public Employee(String empNum, String firstName, String lastName, String birthDate, String sssNumber, String philhealthNumber, String Tin, String pagibigNumber, String status, String position, 
+            float basicPay, float riceSub, float phoneAl, float clothAl, float hourlyRate, String role) {
         this.empNum = empNum;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,6 +49,7 @@ public class Employee {
         this.phoneAl = phoneAl;
         this.clothAl = clothAl;
         this.hourlyRate = hourlyRate;
+        this.role = role;
     }
     
     //Getters
@@ -108,7 +111,14 @@ public class Employee {
 
     public float getHourlyRate() {
         return hourlyRate;
+       
     }
+
+    public String getRole() {
+        return role;
+    }
+    
+    
     
     //setters
 
@@ -171,6 +181,12 @@ public class Employee {
     public void setHourlyRate(float hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    
         
    
 
@@ -192,8 +208,9 @@ public class Employee {
             Float.parseFloat(data[14]), // Rice Subsidy
             Float.parseFloat(data[15]), // Phone Allowance
             Float.parseFloat(data[16]), // Clothing Allowance
-            Float.parseFloat(data[18])  // Hourly Rate
-             );
+            Float.parseFloat(data[18]),  // Hourly Rate
+            data[19] // role 
+            );
      
      }
      

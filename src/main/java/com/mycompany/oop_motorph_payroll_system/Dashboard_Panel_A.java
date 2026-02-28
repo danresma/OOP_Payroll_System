@@ -238,30 +238,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
         // TODO add your handling code here:
         
        
-   
-
-        View.addActionListener(e -> {
-            int selectedRow = jTable1.getSelectedRow();
-            if (selectedRow != -1) {
-                String employeeID = (String) jTable1.getValueAt(selectedRow, 0);
-               // showPayrollGenerationDialog(employeeID);
-            } else {
-                JOptionPane.showMessageDialog(
-                        SwingUtilities.getWindowAncestor(this),
-                        "Please select an employee first."
-                );
-            }
-        });
-        
-        int selectedRow = jTable1.getSelectedRow();
-        
-        if (selectedRow == -1){
-            JOptionPane.showMessageDialog(this, "Please select Employee!");
-            return;
-            
-        }
-        String employeeId = (String) model.getValueAt(selectedRow, 0);
-        JOptionPane.showMessageDialog(this, "Selected Employee " + employeeId);
+ 
 
     }//GEN-LAST:event_ViewActionPerformed
 

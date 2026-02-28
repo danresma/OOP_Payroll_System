@@ -9,6 +9,7 @@ import Model.Employee;
 
 import Model.LoginManager;
 import Model.PayrollGenerator;
+import com.mycompany.oop_motorph_payroll_system.HomeScreen;
 import dao.CSVHandler;
 import service.PayrollService;
 import java.awt.CardLayout;
@@ -37,9 +38,20 @@ public class OOP_MotorPh_Payroll_System {
          
         DataService dataService = new CSVHandler();
         
-        //Log In
-           SwingUtilities.invokeLater(() -> LoginManager.showLoginScreen(dataService));     
+        //show HomeScreen
+         SwingUtilities.invokeLater(() -> {
+
+            HomeScreen home = new HomeScreen();
+
+            home.setLocationRelativeTo(null);
+
+            home.setVisible(true);
+
+        });
+
     }
+
+
      
      
      

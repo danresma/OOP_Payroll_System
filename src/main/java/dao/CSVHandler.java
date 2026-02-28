@@ -28,6 +28,7 @@ public class CSVHandler implements DataService {
         filePaths.put("attendance", "src/main/resources/AttendanceRecord.csv");
         filePaths.put("payroll", "src/main/resources/PayrollReport.csv");
         filePaths.put("useraccount", "src/main/resources/USERACCOUNT.csv");
+        filePaths.put("adminUser", "src/main/resources/AdminUser.csv");
     }
 
     // Read CSV without header (for display purposes)
