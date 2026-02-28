@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import service.DataService;
+import service.EmployeeService;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
 
      private DefaultTableModel model;
      private DataService dataService = new CSVHandler();
+     private EmployeeService employeeService = new EmployeeService(dataService);
 
      
 
@@ -113,7 +115,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
         jButton5.setText("Leave Request");
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Gildeon", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Lucida Sans Typewriter", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setText("MOTORPH PAYROLL SYSTEM");
@@ -129,7 +131,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(View, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
@@ -141,10 +143,10 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(666, 666, 666)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(591, 591, 591)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1072, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -236,8 +238,20 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
 
     private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
         // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
         
-       
+        if (selectedRow == -1){
+            JOptionPane.showMessageDialog(this, "Please Select Employee");
+            return; 
+        }
+        
+        String empNum = jTable1.getValueAt(selectedRow, 0).toString();
+        
+        System.out.println("Selected Employee: " + empNum); // for checking
+        
+        SelectedEmployeePanel frame = new SelectedEmployeePanel(empNum, dataService);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible (true);
  
 
     }//GEN-LAST:event_ViewActionPerformed
