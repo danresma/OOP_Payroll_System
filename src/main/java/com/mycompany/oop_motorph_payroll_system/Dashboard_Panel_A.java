@@ -4,9 +4,13 @@
  */
 package com.mycompany.oop_motorph_payroll_system;
 
+import Model.AddNewEmployeePanel;
 import dao.CSVHandler;
+import java.awt.CardLayout;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import service.DataService;
@@ -53,7 +57,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         View = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAddEmp = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -88,12 +92,12 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Add New Employee");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAddEmp.setBackground(new java.awt.Color(255, 255, 255));
+        btnAddEmp.setForeground(new java.awt.Color(0, 0, 0));
+        btnAddEmp.setText("Add New Employee");
+        btnAddEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAddEmpActionPerformed(evt);
             }
         });
 
@@ -135,7 +139,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(View, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -163,7 +167,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(View, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45))
         );
@@ -256,9 +260,25 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ViewActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        // NOt yet updating ang TAble sa Main D
+        
+    JFrame frame = new JFrame("Add New Employee");
+    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+    // Create dummy panel because constructor requires it
+    JPanel dummyCardPanel = new JPanel(new CardLayout());
+
+    AddNewEmployeePanel addPanel =
+            new AddNewEmployeePanel(dummyCardPanel, null, dataService);
+
+    frame.add(addPanel);
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+  
+    }//GEN-LAST:event_btnAddEmpActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -301,7 +321,7 @@ public class Dashboard_Panel_A extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton View;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAddEmp;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

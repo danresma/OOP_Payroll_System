@@ -43,6 +43,17 @@ public class SelectedEmployeePanel extends javax.swing.JFrame {
             lblEmpNum.setText(employee.getEmpNum());
             lblName.setText(employee.getFirstName() + " " + employee.getLastName());
             lblRate.setText(String.valueOf(employee.getHourlyRate()));
+            lblBday.setText(employee.getBirthDate());
+            lblPagibig.setText(employee.getPagibigNumber());
+            lblPhilH.setText(employee.getPhilhealthNumber());
+            lblPhoneAl.setText(String.valueOf(employee.getPhoneAl()));
+            lblCloth.setText(String.valueOf(employee.getClothAl()));
+            lblStatus.setText(employee.getStatus());
+            lblTin.setText(employee.getTin());
+            lblRice.setText(String.valueOf(employee.getRiceSub()));
+            
+            
+            
             
         } else {
             JOptionPane.showMessageDialog(this, "Employee Not Found");
@@ -69,18 +80,39 @@ public class SelectedEmployeePanel extends javax.swing.JFrame {
         cmbYear = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtPayrollOutput = new javax.swing.JTextArea();
+        lblBday = new javax.swing.JLabel();
+        lblTin = new javax.swing.JLabel();
+        lblLastname = new javax.swing.JLabel();
+        lblPhilH = new javax.swing.JLabel();
+        lblPagibig = new javax.swing.JLabel();
+        lblStatus = new javax.swing.JLabel();
+        lblPosition = new javax.swing.JLabel();
+        lblRice = new javax.swing.JLabel();
+        lblPhoneAl = new javax.swing.JLabel();
+        lblCloth = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(249, 249, 249));
 
-        lblEmpNum.setText("jLabel1");
+        lblEmpNum.setBackground(new java.awt.Color(255, 255, 255));
+        lblEmpNum.setForeground(new java.awt.Color(51, 51, 51));
+        lblEmpNum.setText("ID No.:");
+        lblEmpNum.setOpaque(true);
 
-        lblName.setText("jLabel1");
+        lblName.setBackground(new java.awt.Color(255, 255, 255));
+        lblName.setForeground(new java.awt.Color(51, 51, 51));
+        lblName.setText("Name");
+        lblName.setOpaque(true);
 
-        lblRate.setText("jLabel1");
+        lblRate.setBackground(new java.awt.Color(255, 255, 255));
+        lblRate.setForeground(new java.awt.Color(51, 51, 51));
+        lblRate.setText("Rate");
+        lblRate.setOpaque(true);
 
-        generatePayrollbutton.setText("Generate Payrol");
+        generatePayrollbutton.setText("Generate Payroll");
         generatePayrollbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generatePayrollbuttonActionPerformed(evt);
@@ -100,6 +132,64 @@ public class SelectedEmployeePanel extends javax.swing.JFrame {
         txtPayrollOutput.setRows(5);
         jScrollPane1.setViewportView(txtPayrollOutput);
 
+        lblBday.setBackground(new java.awt.Color(255, 255, 255));
+        lblBday.setForeground(new java.awt.Color(51, 51, 51));
+        lblBday.setText("Bday");
+        lblBday.setOpaque(true);
+
+        lblTin.setBackground(new java.awt.Color(255, 255, 255));
+        lblTin.setForeground(new java.awt.Color(51, 51, 51));
+        lblTin.setText("Tin No.:");
+        lblTin.setOpaque(true);
+
+        lblLastname.setBackground(new java.awt.Color(255, 255, 255));
+        lblLastname.setForeground(new java.awt.Color(51, 51, 51));
+        lblLastname.setText("Last Name");
+        lblLastname.setOpaque(true);
+
+        lblPhilH.setBackground(new java.awt.Color(255, 255, 255));
+        lblPhilH.setForeground(new java.awt.Color(51, 51, 51));
+        lblPhilH.setText("Philhealth");
+        lblPhilH.setOpaque(true);
+
+        lblPagibig.setBackground(new java.awt.Color(255, 255, 255));
+        lblPagibig.setForeground(new java.awt.Color(51, 51, 51));
+        lblPagibig.setText("PagIbig");
+        lblPagibig.setOpaque(true);
+
+        lblStatus.setBackground(new java.awt.Color(255, 255, 255));
+        lblStatus.setForeground(new java.awt.Color(51, 51, 51));
+        lblStatus.setText("Status");
+        lblStatus.setOpaque(true);
+
+        lblPosition.setBackground(new java.awt.Color(255, 255, 255));
+        lblPosition.setForeground(new java.awt.Color(51, 51, 51));
+        lblPosition.setText("Position");
+        lblPosition.setOpaque(true);
+
+        lblRice.setBackground(new java.awt.Color(255, 255, 255));
+        lblRice.setForeground(new java.awt.Color(51, 51, 51));
+        lblRice.setText("RiceSub");
+        lblRice.setOpaque(true);
+
+        lblPhoneAl.setBackground(new java.awt.Color(255, 255, 255));
+        lblPhoneAl.setForeground(new java.awt.Color(51, 51, 51));
+        lblPhoneAl.setText("Phone Allowance");
+        lblPhoneAl.setOpaque(true);
+
+        lblCloth.setBackground(new java.awt.Color(255, 255, 255));
+        lblCloth.setForeground(new java.awt.Color(51, 51, 51));
+        lblCloth.setText("Clothing Allowance");
+        lblCloth.setOpaque(true);
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel10.setText("jLabel10");
+        jLabel10.setOpaque(true);
+
+        jLabel1.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel1.setText("Allowances");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -110,41 +200,84 @@ public class SelectedEmployeePanel extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(generatePayrollbutton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 293, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRate, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblEmpNum, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                        .addComponent(lblName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(343, 343, 343))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cmbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(663, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblRice, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblCloth, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblPhoneAl, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(lblRate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblStatus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblEmpNum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lblTin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblPagibig, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblBday, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblPhilH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblLastname, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(202, 202, 202))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(107, 107, 107)
                         .addComponent(lblEmpNum, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblRate, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBday, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblPhilH, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTin, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPagibig, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(lblRate, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 286, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jScrollPane1)
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblRice, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPhoneAl, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCloth, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblLastname, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(generatePayrollbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,11 +331,23 @@ public class SelectedEmployeePanel extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbMonth;
     private javax.swing.JComboBox<String> cmbYear;
     private javax.swing.JButton generatePayrollbutton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblBday;
+    private javax.swing.JLabel lblCloth;
     private javax.swing.JLabel lblEmpNum;
+    private javax.swing.JLabel lblLastname;
     private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblPagibig;
+    private javax.swing.JLabel lblPhilH;
+    private javax.swing.JLabel lblPhoneAl;
+    private javax.swing.JLabel lblPosition;
     private javax.swing.JLabel lblRate;
+    private javax.swing.JLabel lblRice;
+    private javax.swing.JLabel lblStatus;
+    private javax.swing.JLabel lblTin;
     private javax.swing.JTextArea txtPayrollOutput;
     // End of variables declaration//GEN-END:variables
 }
